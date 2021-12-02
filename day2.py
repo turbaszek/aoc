@@ -20,10 +20,10 @@ def part1(lines: List[str]):
         }
         return result_map[type_](int(value))
 
-    def reducer(a: Result, b: Result):
-        return Result(a.forward + b.forward, a.depth + b.depth)
-
-    r = reduce(reducer, map(mapper, lines))
+    r = reduce(
+        lambda a, b: Result(a.forward + b.forward, a.depth + b.depth),
+        map(mapper, lines)
+    )
     print(r.forward * r.depth)
 
 
