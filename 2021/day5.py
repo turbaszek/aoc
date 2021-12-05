@@ -1,7 +1,7 @@
 from collections import Counter
 from typing import List, NamedTuple
 
-from day1 import get_input
+from utils import get_input, timeit
 
 
 def signum(n: float):
@@ -17,6 +17,10 @@ class Vector:
     def __init__(self, start: Point, end: Point):
         self.start = start
         self.end = end
+        self.direction_vector = Point(
+            signum(self.end.x - self.start.x),
+            signum(self.end.y - self.start.y)
+        )
 
     @classmethod
     def from_input(cls, line: str):
@@ -28,18 +32,14 @@ class Vector:
     def points(self, no_diagonal: bool = False) -> List[Point]:
         points = []
 
-        x_sign = signum(self.end.x - self.start.x)
-        y_sign = signum(self.end.y - self.start.y)
-
-        if no_diagonal and x_sign * y_sign != 0:
+        if no_diagonal and self.direction_vector.x * self.direction_vector.y != 0:
             return points
 
-        direction_vector = Point(x_sign, y_sign)
+        points.append(self.start)
         s = self.start
         while s != self.end:
+            s = Point(s.x + self.direction_vector.x, s.y + self.direction_vector.y)
             points.append(s)
-            s = Point(s.x + direction_vector.x, s.y + direction_vector.y)
-        points.append(self.end)
 
         return points
 
@@ -60,7 +60,9 @@ if __name__ == '__main__':
     vectors = parse_input(get_input(str))
 
     # Part 1
-    count(sum((v.points(no_diagonal=True) for v in vectors), start=[]))
+    with timeit():
+        count(sum((v.points(no_diagonal=True) for v in vectors), start=[]))
 
     # Part 2
-    count(sum((v.points() for v in vectors), start=[]))
+    with timeit():
+        count(sum((v.points() for v in vectors), start=[]))

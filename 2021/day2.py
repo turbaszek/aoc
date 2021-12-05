@@ -1,7 +1,7 @@
 from functools import reduce
 from typing import NamedTuple, List
 
-from day1 import get_input
+from utils import get_input
 
 
 class Result(NamedTuple):

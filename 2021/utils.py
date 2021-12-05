@@ -1,8 +1,9 @@
 import os
-from typing import List
-
-import requests
+import time
 from datetime import datetime
+from typing import List
+from contextlib import contextmanager
+import requests
 
 AOC_SESSION = 'AOC_SESSION'
 CACHE_NAME_TMPL = "tomek_day{}.cache"
@@ -46,21 +47,9 @@ def get_input(cast_to=None) -> List:
     return [cast(x) for x in txt.splitlines(keepends=False)]
 
 
-def part1(ns):
-    print(sum(a < b for a, b in zip(ns[:-1], ns[1:])))
-
-
-def part2(ns):
-    i = 2
-    ma = []
-    while i < len(ns):
-        ma.append(sum([ns[i-2], ns[i-1], ns[i]]))
-        i += 1
-    return ma
-
-
-if __name__ == '__main__':
-    ns = get_input(int)
-    part1(ns)
-    part1(part2(ns))
-
+@contextmanager
+def timeit():
+    start = time.monotonic_ns()
+    yield
+    end = time.monotonic_ns()
+    print(f"Time: {(end - start)/1000000} ms")

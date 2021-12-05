@@ -1,6 +1,6 @@
 from typing import List
 
-from day1 import get_input
+from utils import get_input
 
 
 class Number:
