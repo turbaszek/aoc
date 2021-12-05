@@ -1,7 +1,11 @@
+import re
 from collections import Counter
 from typing import List, NamedTuple
 
 from utils import get_input, timeit
+
+
+PATTERN = re.compile(r"(\d+),(\d+) -> (\d+),(\d+)")
 
 
 def signum(n: float):
@@ -24,9 +28,7 @@ class Vector:
 
     @classmethod
     def from_input(cls, line: str):
-        s, e = line.strip().split(' -> ')
-        s_x, s_y = s.split(",")
-        e_x, e_y = e.split(",")
+        s_x, s_y, e_x, e_y = re.findall(PATTERN, line)[0]
         return cls(Point(int(s_x), int(s_y)), Point(int(e_x), int(e_y)))
 
     def points(self, no_diagonal: bool = False) -> List[Point]:
@@ -45,8 +47,7 @@ class Vector:
 
 
 def count(all_points: List[Point]):
-    cntr = Counter(all_points)
-    print(sum(v >= 2 for v in cntr.values()))
+    print(sum(v >= 2 for v in Counter(all_points).values()))
 
 
 def parse_input(input_lines: List[str]):
@@ -54,9 +55,6 @@ def parse_input(input_lines: List[str]):
 
 
 if __name__ == '__main__':
-    assert Vector.from_input("1,1 -> 1,3").points() == [Point(x=1, y=1), Point(x=1, y=2), Point(x=1, y=3)]
-    assert Vector.from_input("1,1 -> 3,1").points() == [Point(x=1, y=1), Point(x=2, y=1), Point(x=3, y=1)]
-
     vectors = parse_input(get_input(str))
 
     # Part 1
