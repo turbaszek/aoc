@@ -84,6 +84,6 @@ def solve(input_lines: List[str]):
     print("Part 2:", winners[-1])
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     lines = get_input(str)
     solve(lines)

@@ -5,8 +5,8 @@ from typing import List
 from contextlib import contextmanager
 import requests
 
-AOC_SESSION = 'AOC_SESSION'
-CACHE_NAME_TMPL = "tomek_day{}.cache"
+AOC_SESSION = "AOC_SESSION"
+CACHE_NAME_TMPL = "day{}.input"
 
 
 def cache(key: int, txt: str) -> None:
@@ -27,8 +27,7 @@ def get_input_from_cache(day: int) -> str:
 def get_input_from_aoc(day: int) -> str:
     url = "https://adventofcode.com/2021/day/{}/input"
     r = requests.get(
-        url.format(day),
-        headers={"Cookie": f"session={os.environ[AOC_SESSION]}"}
+        url.format(day), headers={"Cookie": f"session={os.environ[AOC_SESSION]}"}
     )
     r.raise_for_status()
     return r.text
@@ -36,7 +35,6 @@ def get_input_from_aoc(day: int) -> str:
 
 def get_input(cast_to=None) -> List:
     day = datetime.now().day
-
     try:
         txt = get_input_from_cache(day)
     except FileNotFoundError:

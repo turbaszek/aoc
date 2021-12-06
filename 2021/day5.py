@@ -22,8 +22,7 @@ class Vector:
         self.start = start
         self.end = end
         self.direction_vector = Point(
-            signum(self.end.x - self.start.x),
-            signum(self.end.y - self.start.y)
+            signum(self.end.x - self.start.x), signum(self.end.y - self.start.y)
         )
 
     @classmethod
@@ -54,7 +53,7 @@ def parse_input(input_lines: List[str]):
     return [Vector.from_input(l.strip()) for l in input_lines]
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     vectors = parse_input(get_input(str))
 
     # Part 1

@@ -38,7 +38,7 @@ def part2(input_lines: List[str]):
     print(ox * co)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     lines = get_input(str)
     part1(lines)
     part2(lines)

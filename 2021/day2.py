@@ -22,7 +22,7 @@ def part1(lines: List[str]):
 
     r = reduce(
         lambda a, b: Result(a.forward + b.forward, a.depth + b.depth),
-        map(mapper, lines)
+        map(mapper, lines),
     )
     print(r.forward * r.depth)
 
@@ -42,7 +42,7 @@ def part2(lines: List[str]):
     print(f, d, f * d)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     lines = get_input(str)
     part1(lines)
     part2(lines)
