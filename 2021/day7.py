@@ -3,7 +3,7 @@ from typing import List
 from utils import get_input
 
 
-def solve(positions: List[int], summator):
+def solve(positions: List[int], sumator):
     position_map = {i: 0 for i in range(max(positions) + 1)}
     for p in positions:
         position_map[p] += 1
@@ -13,7 +13,7 @@ def solve(positions: List[int], summator):
         cost = 0
         for x, count in position_map.items():
             if x != p:
-                cost += summator(abs(p - x), count)
+                cost += sumator(abs(p - x), count)
         positions_costs[p] = cost
 
     print(min(positions_costs.values()))
