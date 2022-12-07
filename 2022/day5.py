@@ -16,14 +16,14 @@ def parse_command(cmd: str):
 
 
 def move_container_9000(state, cmd: Command):
-    c = state[cmd.origin].pop()
-    state[cmd.dest].append(c)
-    print(f"moved {c} from {cmd.origin} to {cmd.dest}")
+    for _ in range(cmd.num):
+        c = state[cmd.origin].pop()
+        state[cmd.dest].append(c)
+        print(f"moved {c} from {cmd.origin} to {cmd.dest}")
 
 
 def move_container_9001(state, cmd: Command):
     cnts = []
-    print(state)
     for _ in range(cmd.num):
         c = state[cmd.origin].pop()
         cnts.insert(0, c)
@@ -33,23 +33,20 @@ def move_container_9001(state, cmd: Command):
     print(f"moved {cnts} from {cmd.origin} to {cmd.dest}")
 
 
-def part1(state: dict, ns: List[str]):
-    for n in ns:
-        if n.startswith("move"):
-            cmd = parse_command(n)
-            for _ in range(cmd.num):
-                move_container_9000(state, cmd)
+def run_the_crane(state: dict, cmds: List[str], func):
+    for cmd in cmds:
+        if cmd.startswith("move"):
+            func(state, parse_command(cmd))
 
     print("".join([state[s][-1] for s in state]))
+
+
+def part1(state: dict, ns: List[str]):
+    run_the_crane(state, ns, move_container_9000)
 
 
 def part2(state, ns: List[str]):
-    for n in ns:
-        if n.startswith("move"):
-            cmd = parse_command(n)
-            move_container_9001(state, cmd)
-
-    print("".join([state[s][-1] for s in state]))
+    run_the_crane(state, ns, move_container_9001)
 
 
 def parse_initial_state(txt: str):
